@@ -27,46 +27,36 @@ def get_prefix(client, message):
     return prefixes.get(str(message.guild.id), "-")
 
 
-client = commands.Bot(command_prefix=get_prefix,
+loopylol = commands.Bot(command_prefix=get_prefix,
                       case_insensitive=True,
                       intents=intents)
-client.remove_command("help")
+loopylol.remove_command("help")
 
 
 ## --------------------------------- ##
 for filename in os.listdir('./cogs'):
   if filename.endswith('.py'):
-    client.load_extension(f'cogs.{filename[:-3]}')
+    loopylol.load_extension(f'cogs.{filename[:-3]}')
 #####------------\!/--------------#####
 
 
 
 #status
 
-@client.event
+@loopylol.event
 async def on_ready():
-    await client.change_presence(
-        activity=discord.Streaming(name=f"Prefix: - | Watching over {len(client.guilds)} Guilds ", url='https://www.twitch.tv/zzzloopy'))
+    await loopylol.change_presence(
+        activity=discord.Streaming(name=f"Prefix: - | Watching over {len(loopylol.guilds)} Guilds ", url='https://www.twitch.tv/zzzloopy'))
     print(f"""
-  
-    ┏━━━┓╋╋┏┓╋┏┓
-    ┃┏━┓┃╋╋┃┃┏┛┗┓
-    ┃┗━━┳━━┫┃┣┓┏╋━━┓
-    ┗━━┓┃┏┓┃┃┣┫┃┃━━┫
-    ┃┗━┛┃┗┛┃┗┫┃┗╋━━┃
-    ┗━━━┫┏━┻━┻┻━┻━━┛
-    ╋╋╋╋┃┃
-    ╋╋╋╋┗┛
-  
-    Logged into {client.user} 
-    ID: {client.user.id}
-    Guilds: {len(client.guilds)}
+    Logged into {loopylol.user} 
+    ID: {loopylol.user.id}
+    Guilds: {len(loopylol.guilds)}
     Developed by Loopy#0001 >_<""")
 
 
 
 #Prefix 
-@client.command(aliases=['prefix'])
+@loopylol.command(aliases=['prefix'])
 @commands.guild_only()
 @commands.has_permissions(administrator=True)
 async def setprefix(ctx, prefix):
@@ -84,7 +74,7 @@ async def setprefix(ctx, prefix):
 def is_server_owner(ctx):
     return ctx.message.author.id == ctx.guild.owner.id
 
-@client.listen("on_guild_join")
+@loopylol.listen("on_guild_join")
 async def update_json(guild):
     with open('whitelist.json', 'r') as f:
         whitelisted = json.load(f)
@@ -95,7 +85,7 @@ async def update_json(guild):
     with open('whitelist.json', 'w') as f:
         json.dump(whitelisted, f, indent=4)
 
-@client.command(aliases=['wld'], hidden=True)
+@loopylol.command(aliases=['wld'], hidden=True)
 async def whitelisted(ctx):
 
     embed = discord.Embed(title=f"Whitelisted users for {ctx.guild.name}",
@@ -117,7 +107,7 @@ async def whitelisted_error(ctx, error):
         em = discord.Embed(description = "Sorry but you don't have `administrator` permissions")
         await ctx.send(embed=em)
 
-@client.command(aliases=['wl'])
+@loopylol.command(aliases=['wl'])
 @commands.check(is_server_owner)
 async def whitelist(ctx,user: discord.Member = None):
     if user is None:
@@ -150,7 +140,7 @@ async def whitelist_error(ctx, error):
         await ctx.send(embed=em)
 
 
-@client.command(aliases=['uwl'])
+@loopylol.command(aliases=['uwl'])
 @commands.check(is_server_owner)
 async def unwhitelist(ctx, user: discord.User = None):
     if user is None:
@@ -178,4 +168,4 @@ async def unwhitelist_error(ctx, error):
         em = discord.Embed(description = f"Only the guild owner can whitelist")
         await ctx.send(embed = em)
 
-client.run("TOKEN_HERE_SKID")
+loopylol.run("TOKEN_HERE_SKID")
