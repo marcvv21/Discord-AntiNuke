@@ -18,12 +18,6 @@ class AntiNuke(commands.Cog):
           
 
           await channel.guild.kick(i.user,reason="AntiNuke: Creating Channels")
-          await i.target.delete(reason=f"AntiNuke: Deleting user created channels")
-          await i.target.delete(reason=f"AntiNuke: Deleting user created channels")
-          await i.target.delete(reason=f"AntiNuke: Deleting user created channels")
-          await i.target.delete(reason=f"AntiNuke: Deleting user created channels")
-          await i.target.delete(reason=f"AntiNuke: Deleting user created channels")
-          await i.target.delete(reason=f"AntiNuke: Deleting user created channels")
           return
         
     @commands.Cog.listener()
@@ -33,7 +27,7 @@ class AntiNuke(commands.Cog):
       async for i in channel.guild.audit_logs(limit=1, after=datetime.datetime.now() - datetime.timedelta(minutes = 2), action=discord.AuditLogAction.channel_delete):
           if str(i.user.id) in whitelisted[str(channel.guild.id)]:
             return
-          await channel.guild.kick(i.user,reason="Splits AntiNuke: Deleting Channels")
+          await channel.guild.kick(i.user,reason="AntiNuke: Deleting Channels")
           return
 
 
@@ -45,8 +39,6 @@ class AntiNuke(commands.Cog):
       
           if str(i.user.id) in whitelisted[str(guild.id)]:
             return
-    
-          await guild.ban(i.user, reason="AntiNuke: Banning Members")
           await guild.ban(i.user, reason="AntiNuke: Banning Members")
           return
 
@@ -59,7 +51,7 @@ class AntiNuke(commands.Cog):
           if str(i.user.id) in whitelisted[str(i.guild.id)]:
             return
           if i.target.id == member.id:
-             await i.user.kick()
+             await i.user.ban(i.user, reason = "AntiNuke: Kicking Members")
              return
 
     @commands.Cog.listener()
@@ -74,7 +66,6 @@ class AntiNuke(commands.Cog):
             return
     
         await role.guild.kick(i.user, reason="Creating Roles")
-        await i.target.delete()
         return
         
     @commands.Cog.listener()
@@ -89,7 +80,6 @@ class AntiNuke(commands.Cog):
               return
     
           await role.guild.kick(i.user, reason="Antinuke: Deleting Roles")
-          await i.target.clone()
           return
 
     @commands.Cog.listener()
@@ -102,7 +92,6 @@ class AntiNuke(commands.Cog):
           
 
           await webhook.guild.kick(reason="AntiNuke: Creating Webhooks")
-          await i.target.delete()
           return
 
 def setup(client):
