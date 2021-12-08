@@ -4,8 +4,8 @@ from discord.ext import commands
 import datetime
 
 class AntiNuke(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    def __init__(self, loopylol):
+        self.lopoylol = loopylol
 
 
     @commands.Cog.listener()
@@ -94,5 +94,5 @@ class AntiNuke(commands.Cog):
           await webhook.guild.kick(reason="AntiNuke: Creating Webhooks")
           return
 
-def setup(client):
-    client.add_cog(AntiNuke(client))
+def setup(loopylol):
+    loopylol.add_cog(AntiNuke(loopylol))
