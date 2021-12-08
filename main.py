@@ -1,9 +1,5 @@
 import discord
 from discord.ext import commands
-from discord.utils import get, find
-import asyncio
-import datetime
-from datetime import datetime
 import os
 import requests
 import json
