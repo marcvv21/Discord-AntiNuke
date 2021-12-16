@@ -61,10 +61,8 @@ async def setprefix(ctx, prefix):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
         prefixes[str(ctx.guild.id)] = prefix
-
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
-
     await ctx.send(f"The prefix in this server is now set to `{prefix}`")
 
 #Antinuke
@@ -76,19 +74,15 @@ def is_server_owner(ctx):
 async def update_json(guild):
     with open('whitelist.json', 'r') as f:
         whitelisted = json.load(f)
-
     if str(guild.id) not in whitelisted:
         whitelisted[str(guild.id)] = []
-
     with open('whitelist.json', 'w') as f:
         json.dump(whitelisted, f, indent=4)
 
 @loopylol.command(aliases=['wld'], hidden=True)
 async def whitelisted(ctx):
-
     embed = discord.Embed(title=f"Whitelisted users for {ctx.guild.name}",
                           description="")
-
     with open('whitelist.json', 'r') as i:
         whitelisted = json.load(i)
     try:
@@ -113,7 +107,6 @@ async def whitelist(ctx,user: discord.User = None):
         return
     with open('whitelist.json', 'r') as f:
         whitelisted = json.load(f)
-
     if str(ctx.guild.id) not in whitelisted:
         whitelisted[str(ctx.guild.id)] = []
     else:
@@ -122,7 +115,6 @@ async def whitelist(ctx,user: discord.User = None):
         else:
             await ctx.send("That user is already whitelisted")
             return
-
     with open('whitelist.json', 'w') as f:
         json.dump(whitelisted, f, indent=4)
     await ctx.send(f"{user.mention} has been added to the whitelist")
