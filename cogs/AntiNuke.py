@@ -5,7 +5,7 @@ import datetime
 
 class AntiNuke(commands.Cog):
     def __init__(self, loopylol):
-        self.lopoylol = loopylol
+        self.loopylol = loopylol
 
 
     @commands.Cog.listener()

@@ -1,3 +1,3 @@
-// When the prefix command is used, the guild id and prefix will be injected here
+// When the bot joins the server, the guild id and prefix will be injected here
 
 {}
