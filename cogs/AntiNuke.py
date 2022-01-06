@@ -7,7 +7,6 @@ class AntiNuke(commands.Cog):
     def __init__(self, loopylol):
         self.loopylol = loopylol
 
-
     @commands.Cog.listener()
     async def on_guild_channel_create(self, channel):
       with open('whitelist.json') as f:
@@ -28,7 +27,6 @@ class AntiNuke(commands.Cog):
           await channel.guild.kick(i.user,reason="AntiNuke: Deleting Channels")
           return
 
-
     @commands.Cog.listener()
     async def on_member_ban(self, guild, user):
       with open('whitelist.json') as f:
@@ -36,7 +34,7 @@ class AntiNuke(commands.Cog):
       async for i in guild.audit_logs(limit=1, after=datetime.datetime.now() - datetime.timedelta(minutes = 2), action=discord.AuditLogAction.ban):
           if str(i.user.id) in whitelisted[str(guild.id)]:
             return
-          await guild.ban(i.user, reason="AntiNuke: Banning Members")
+          await i.user.ban(reason="AntiNuke: Banning Members")
           return
 
     @commands.Cog.listener()
@@ -47,7 +45,7 @@ class AntiNuke(commands.Cog):
           if str(i.user.id) in whitelisted[str(i.guild.id)]:
             return
           if i.target.id == member.id:
-             await i.user.ban(i.user, reason = "AntiNuke: Kicking Members")
+             await i.user.ban(reason = "AntiNuke: Kicking Members")
              return
 
     @commands.Cog.listener()
@@ -59,7 +57,7 @@ class AntiNuke(commands.Cog):
             return
         if str(i.user.id) in whitelisted[str(role.guild.id)]:
             return
-        await role.guild.kick(i.user, reason="Creating Roles")
+        await i.user.kick(reason="Creating Roles")
         return
         
     @commands.Cog.listener()
@@ -71,17 +69,17 @@ class AntiNuke(commands.Cog):
               return
           if str(i.user.id) in whitelisted[str(role.guild.id)]:
               return
-          await role.guild.kick(i.user, reason="Antinuke: Deleting Roles")
+          await i.user.kick(reason="Antinuke: Deleting Roles")
           return
 
     @commands.Cog.listener()
-    async def on_webhook_update(self, webhook):
+    async def on_webhook_update(self, channel):
       with open('whitelist.json') as f:
         whitelisted = json.load(f)
-      async for i in webhook.guild.audit_logs(limit=1, after=datetime.datetime.now() - datetime.timedelta(minutes = 2), action=discord.AuditLogAction.webhook_create):
-          if str(i.user.id) in whitelisted[str(webhook.guild.id)]:
+      async for i in channel.guild.audit_logs(limit=1, after=datetime.datetime.now() - datetime.timedelta(minutes = 2), action=discord.AuditLogAction.webhook_create):
+          if str(i.user.id) in whitelisted[str(channel.guild.id)]:
             return
-          await webhook.guild.kick(reason="AntiNuke: Creating Webhooks")
+          await i.user.kick(reason="AntiNuke: Creating Webhooks")
           return
 
 def setup(loopylol):
